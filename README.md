@@ -1,102 +1,87 @@
-Weather.js
-==========
 
-[![Build Status](https://secure.travis-ci.org/noazark/weather.svg?branch=master)](https://travis-ci.org/noazark/weather)
-[![npm](https://img.shields.io/npm/v/weather.js.svg)](https://www.npmjs.com/package/weather.js)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/noazark/weather/master/LICENSE)
+MyWeather.js is a comprehensive JavaScript weather library built around the OpenWeatherMap API. It was created to provide a robust and easy-to-use interface for retrieving weather information. Currently, OpenWeatherMap is the only supported data provider.
 
+MyWeather.js is under active development, and contributions are welcome! Some of the planned features include:
 
-## About
+Historical weather information
+Expanded API key usage
+Additional data sources
+More conversion utility
+Note: Future updates may include support for other weather data providers. If you have suggestions for additional providers, please open a new issue with details about the provider and its API.
 
-Weather.js was designed to be a conclusive JavaScript weather library built around the [OpenWeatherMap](http://openweathermap.org/) API (no affiliation). Since other providers format their output differently, currently OpenWeatherMap is the only source provider.
+MyWeather.js was forked and modified by Mubarak Yussuf from the original Weather.js library created by Noah Smith.
 
-Weather.js is still in early development so expect changes and please contribute! Among the features I hope to incorporate:
+Install
+MyWeather.js works in both the browser and Node.js. For browser usage, download the latest version from GitHub. For Node.js, install it via NPM:
 
--   historical weather information
--   API key usage (but there is a beta version!)
--   more data sources
--   more conversions!
-
-**Note:** As stated above there are plans to add more providers in the future. If you have suggestions for other providers that you'd like to see please create a new [issue](https://github.com/noazark/weather/issues) with info about the provider and a link to the provider's API.
-
-Weather.js was originally created by [Noah Smith](https://github.com/noazark) and is currently maintained by [PallasStreams](https://github.com/PallasStreams).
-
-## Install
-Weather.js works in the browser and Node.js. Take your pick, For use in the browser, download the most recent version on GitHub. For use in Node, just install using your NPM package manager of choice. Currently Node has an old version of the library available but it will be updated soon.
-
-```
-npm install -g weather.js
-```
+npm install -g myweather.js
 
 ## Testing
-To run the JavaScript unit tests run:
-```bash
+To run the JavaScript unit tests, use:
 npm run test
 ```
 
 ## Usage
 
-At the moment you can access the current weather conditions and the forcast for any city. By default it will use the closes match as returned by OpenWeatherMap.
+MyWeather.js allows you to access current weather conditions and forecasts for any city. By default, it uses the closest match as returned by OpenWeatherMap.
 
 ```javascript
 // API Key methods
-var apiKey = '12345';
-Weather.setApiKey( apiKey );
-var tempApiKey = Weather.getApiKey();
+var apiKey = 'your-api-key';
+WeatherApp.setApiKey(apiKey);
+var tempApiKey = WeatherApp.getApiKey();
 
 // Language methods
-var language = "de"; // set the language to German - libraries default language is "en" (English)
-Weather.setLanguage( language );
-var tempLanguage = Weather.getLanguage();
+var language = "es"; // set the language to Spanish - library's default language is "en" (English)
+WeatherApp.setLanguage(language);
+var tempLanguage = WeatherApp.getLanguage();
 
 var cityId = '4393217';
 
 // Get current weather for a given city
-Weather.getCurrent( 'Kansas City', function( current ) {
+WeatherApp.getCurrentWeatherByCity('Kansas City', function(current) {
     console.log(
-        [ 'Currently:', current.temperature(), 'and', current.conditions() ].join( ' ' );
+        ['Currently:', current.temperature(), 'and', current.conditions()].join(' ')
     );
-} );
+});
 
 // Get the current weather for a given city using the city id
-Weather.getCurrentByCityId( cityId, function( current ) {
+WeatherApp.getCurrentWeatherByCityId(cityId, function(current) {
     console.log(
-        [ 'Currently:', current.temperature(), 'and', current.conditions() ].join( ' ' );
+        ['Currently:', current.temperature(), 'and', current.conditions()].join(' ')
     );
-} );
+});
 
 // Get the current weather for a given city using the latitude and longitude
 var lat = 39.100,
-    long = -94.579;
-Weather.getCurrentByLatLong( lat, long, function( current ) {
+    lon = -94.579;
+WeatherApp.getCurrentWeatherByCoordinates(lat, lon, function(current) {
     console.log(
-        [ 'Currently:', current.temperature(), 'and', current.conditions() ].join( ' ' );
+        ['Currently:', current.temperature(), 'and', current.conditions()].join(' ')
     );
-} );
+});
 
 // Get the forecast for a given city
-Weather.getForecast( 'Kansas City', function( forecast ) {
-    console.log( 'Forecast High in Kelvin: ' + forecast.high() );
-    console.log( 'Forecast High in Fahrenheit' + Weather.kelvinToFahrenheit( forecast.high() ) );
-    console.log( 'Forecast High in Celsius' + Weather.kelvinToCelsius( forecast.high() ) );
-} );
+WeatherApp.getWeatherForecastByCity('Kansas City', function(forecast) {
+    console.log('Forecast High in Kelvin: ' + forecast.high());
+    console.log('Forecast High in Fahrenheit: ' + WeatherApp.kelvinToFahrenheit(forecast.high()));
+    console.log('Forecast High in Celsius: ' + WeatherApp.kelvinToCelsius(forecast.high()));
+});
 
 // Get the forecast for a given city using the city id
-Weather.getForecastByCityId( cityId, function( forecast ) {
-    console.log( 'Forecast High in Kelvin: ' + forecast.high() );
-    console.log( 'Forecast High in Fahrenheit' + Weather.kelvinToFahrenheit( forecast.high() ) );
-    console.log( 'Forecast High in Celsius' + Weather.kelvinToCelsius( forecast.high() ) );
-} );
+WeatherApp.getWeatherForecastByCityId(cityId, function(forecast) {
+    console.log('Forecast High in Kelvin: ' + forecast.high());
+    console.log('Forecast High in Fahrenheit: ' + WeatherApp.kelvinToFahrenheit(forecast.high()));
+    console.log('Forecast High in Celsius: ' + WeatherApp.kelvinToCelsius(forecast.high()));
+});
 
 // Get the forecast for a given city using the latitude and longitude
-var lat = 39.100,
-    long = -94.579;
-Weather.getForecastByLatLong( lat, long, function( forecast ) {
-    console.log( 'Forecast High in Kelvin: ' + forecast.high() );
-    console.log( 'Forecast High in Fahrenheit' + Weather.kelvinToFahrenheit( forecast.high() ) );
-    console.log( 'Forecast High in Celsius' + Weather.kelvinToCelsius( forecast.high() ) );
-} );
-```
+WeatherApp.getWeatherForecastByCoordinates(lat, lon, function(forecast) {
+    console.log('Forecast High in Kelvin: ' + forecast.high());
+    console.log('Forecast High in Fahrenheit: ' + WeatherApp.kelvinToFahrenheit(forecast.high()));
+    console.log('Forecast High in Celsius: ' + WeatherApp.kelvinToCelsius(forecast.high()));
+});
+
 
 [openweathermap.org]: http://openweathermap.org
-[Weather.js]: http://github.com/noazark/weather
+[Weather.js]: https://github.com/mubaraky25/Weather
